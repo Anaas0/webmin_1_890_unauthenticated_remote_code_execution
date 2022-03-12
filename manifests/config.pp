@@ -7,6 +7,7 @@ class webmin_1_890_unauthenticated_remote_code_execution::config {
   $user = 'webminusr'
   $user_home = "/home/${user}"
 
+  # Create User
   user { $user:
     ensure     => 'present',
     uid        => '666',
@@ -18,6 +19,7 @@ class webmin_1_890_unauthenticated_remote_code_execution::config {
     notify     => File['/opt/Webmin_1.890/'],
   }
 
+  # Create a Cron job to ensure Webmin is started even if host is restarted.
   cron { 'start-webmin-cron':
     command => 'sudo /etc/webmin/start',
     special => 'reboot',
