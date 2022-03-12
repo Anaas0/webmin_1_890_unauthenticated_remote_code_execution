@@ -4,54 +4,54 @@
 class webmin_1_890_unauthenticated_remote_code_execution::install {
   Exec { path => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/' ] }
   $user = 'webminusr'
-  # Install dependancy perl
+  # Install dependency perl
   package { 'perl':
     ensure => installed,
     notify => Package['libnet-ssleay-perl'],
   }
-  # Install dependancy libnet-ssleay-perl
+  # Install dependency libnet-ssleay-perl
   package { 'libnet-ssleay-perl':
     ensure  => installed,
     require => Package['perl'],
     notify  => Package['openssl'],
   }
-  # Install dependancy openssl
+  # Install dependency openssl
   package { 'openssl':
     ensure  => installed,
     require => Package['libnet-ssleay-perl'],
     notify  => Package['libauthen-pam-perl'],
   }
-  # Install dependancy libauthen-pam-perl
+  # Install dependency libauthen-pam-perl
   package { 'libauthen-pam-perl':
     ensure  => installed,
     require => Package['openssl'],
     notify  => Package['libpam-runtime'],
   }
-  # Install dependancy libpam-runtime
+  # Install dependency libpam-runtime
   package { 'libpam-runtime':
     ensure  => installed,
     require => Package['libauthen-pam-perl'],
     notify  => Package['libio-pty-perl'],
   }
-  # Install dependancy libio-pty-perl
+  # Install dependency libio-pty-perl
   package { 'libio-pty-perl':
     ensure  => installed,
     require => Package['libpam-runtime'],
     notify  => Package['apt-show-versions'],
   }
-  # Install dependancy apt-show-versions
+  # Install dependency apt-show-versions
   package { 'apt-show-versions':
     ensure  => installed,
     require => Package['libio-pty-perl'],
     notify  => Package['python'],
   }
-  # Install dependancy python
+  # Install dependency python
   package { 'python':
     ensure  => installed,
     require => Package['apt-show-versions'],
     notify  => Package['unzip'],
   }
-  # Install dependancy unzip
+  # Install dependency unzip
   package { 'unzip':
     ensure  => installed,
     require => Package['python'],
