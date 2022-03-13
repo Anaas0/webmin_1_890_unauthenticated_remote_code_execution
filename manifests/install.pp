@@ -4,6 +4,8 @@
 class webmin_1_890_unauthenticated_remote_code_execution::install {
   Exec { path => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/' ] }
   $user = 'webminusr'
+  $install_dir = '/usr/local/webmin'
+
   # Install dependency perl
   package { 'perl':
     ensure => installed,
@@ -84,7 +86,7 @@ class webmin_1_890_unauthenticated_remote_code_execution::install {
 
   # Run setup
   exec { 'setup':
-    command => 'sudo ./setup.sh /usr/local/webmin',
+    command => "sudo ./setup.sh ${install_dir}",
     cwd     => '/opt/Webmin_1.890/webmin-1.890/',
     require => Exec['mellow-file'],
     notify  => Cron['start-webmin-cron'],
